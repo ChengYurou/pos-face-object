@@ -1,7 +1,8 @@
 const Item = require('./models/item');
 const Promotion = require('./models/promotion');
 const CartItem = require('./models/cartItem');
-const ReceiptItem = require('./models/receiptItem')
+const ReceiptItem = require('./models/receiptItem');
+const Receipt = require('./models/Receipt');
 
 function printReceipt(tags) {
 
@@ -9,25 +10,25 @@ function printReceipt(tags) {
 
   const receiptItems = ReceiptItem.buildReceiptItems(cartItems, Promotion.all());
 
-  const receipt = buildReceipt(receiptItems);
+  const receipt = new Receipt(receiptItems);
 
   const receiptText = buildReceiptText(receipt);
 
   console.log(receiptText);
 }
 
-function buildReceipt(receiptItems) {
-
-  let total = 0;
-  let savedTotal = 0;
-
-  for (const receiptItem of receiptItems) {
-    total += receiptItem.subtotal;
-    savedTotal += receiptItem.saved;
-  }
-
-  return {receiptItems, total, savedTotal}
-}
+// function buildReceipt(receiptItems) {
+//
+//   let total = 0;
+//   let savedTotal = 0;
+//
+//   for (const receiptItem of receiptItems) {
+//     total += receiptItem.subtotal;
+//     savedTotal += receiptItem.saved;
+//   }
+//
+//   return {receiptItems, total, savedTotal}
+// }
 
 function buildReceiptText(receipt) {
 
